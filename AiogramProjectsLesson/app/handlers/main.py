@@ -2,7 +2,7 @@ from aiogram import Router, F
 from aiogram.types import CallbackQuery, Message
 from aiogram.filters.callback_data import CallbackData
 from aiogram.filters import CommandStart
-import app.keyboards as kb
+import app.keyboards.keyboards as kb
 
 router = Router()
 

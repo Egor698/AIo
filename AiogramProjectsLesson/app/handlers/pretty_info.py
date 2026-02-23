@@ -1,40 +1,29 @@
-from data.catalog import CATALOG
-from data.cart import CART
+from data.catalog_data import CATALOG, DataSneakers
+from data.cart_data import CART
 
-def get_info_and_photo_about_sneaker(key_brand: str, sneakers_id: str) -> tuple[str, str]:
-    #получаем класс DataSneakers в CATALOG
-    sneakers_data = None
+def get_pretty_text_and_photo(sneaker_data: DataSneakers) -> tuple[str, str]:
     
-    for sneakers_info in CATALOG[key_brand]['items']:
-        if sneakers_info['id'] == sneakers_id:
-            sneakers_data = sneakers_info['data']
-            break
-        
-    if not sneakers_data:
-        raise ValueError('Кроссовок не найден')
+    formatted_price = f"{sneaker_data.price:,}".replace(',', ' ')
     
-    #делаем красивый вывод
-    formatted_price = f"{sneakers_data.price:,}".replace(',', ' ')
-    
-    text = f"""👟 <b>{sneakers_data.name}</b>
+    text = f"""👟 <b>{sneaker_data.name}</b>
 💰 <b>Цена:</b> {formatted_price} ₽
 📝 <b>Описание:</b>
-{sneakers_data.description}
+{sneaker_data.description}
 """
-    return text, sneakers_data.photo_url
+    return text, sneaker_data.photo_url
+
+
+def get_info_about_sneaker_catalog(key_brand: str, sneaker_id: str) -> tuple[str, str]:
+    
+    sneaker_data = CATALOG.search_sneaker_data(key_brand, sneaker_id)
+
+    return get_pretty_text_and_photo(sneaker_data)
     
     
-def get_info_cart_about_sneaker(sneakers_id: int) -> tuple[str, str]:
-    sneakers_data = CART.search_sneaker_info_in_cart(sneakers_id)
+def get_info_about_sneaker_in_cart(sneaker_id: int) -> tuple[str, str]:
+    sneaker_data = CART.search_sneaker_data(sneaker_id)
     
-    formatted_price = f"{sneakers_data.price:,}".replace(',', ' ')
-    
-    text = f"""👟 <b>{sneakers_data.name}</b>
-💰 <b>Цена:</b> {formatted_price} ₽
-📝 <b>Описание:</b>
-{sneakers_data.description}
-"""
-    return text, sneakers_data.photo_url
+    return get_pretty_text_and_photo(sneaker_data)
     
     
             

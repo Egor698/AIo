@@ -1,18 +1,19 @@
 from aiogram.filters.callback_data import CallbackData
-from data.catalog import DataSneakers
+from data.catalog_data import DataSneakers
 
 class BrandCD(CallbackData, prefix='brand'):
     key_brand: str
     
 
-class SneakersCD(CallbackData, prefix='sneakers'):
+class SneakerCD(CallbackData, prefix='sneakers'):
     key_brand: str
-    sneakers_id: int
+    sneaker_id: int
     
     
 class RequestSneakerInCartCD(CallbackData, prefix='requestcart'):
     key_brand: str
     sneaker_id: int
     
-class SneakersInCartCD(CallbackData, prefix='sneakersincart'):
+    
+class SneakerCartCD(CallbackData, prefix='sneakersincart'):
     sneaker_id: int
